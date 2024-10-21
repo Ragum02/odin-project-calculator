@@ -1,10 +1,10 @@
 const display = document.querySelector(".screen")
 const buttons = document.querySelectorAll("li")
 
-const operator = null;
+let operator;
 
-const previousEntry = "";
-const currentEntry = "";
+let previousEntry = "";
+let currentEntry = "";
 
 buttons.forEach(button => {
     button.addEventListener("click", e => {handleInput(e.target.textContent)});
@@ -29,7 +29,7 @@ document.addEventListener("keydown", e => {
             handleInput("=")
             break;
         case "Backspace": case "Delete":
-            backspace()
+            backspace();
             break;
         case "Escape":
             deleteAll();
@@ -41,5 +41,19 @@ document.addEventListener("keydown", e => {
 /*********/ 
 
 function handleInput(userInput){
-display.textContent += userInput;
+currentEntry += userInput;
+display.textContent = currentEntry;
+}
+
+function performOperation(operator) {
+
+}
+
+/* Delete function */
+function backspace(){currentEntry = currentEntry.slice (0, -1); display.textContent = currentEntry || "0"};
+function deleteAll(){currentEntry = ""; previousEntry = ""; operator = null; display.textContent = "0"};
+/*******************/
+
+function result(){
+
 }
