@@ -62,7 +62,3 @@ function performOperation(operator) {
 function backspace(){currentEntry = currentEntry.slice (0, -1); display.textContent = currentEntry || "0"};
 function deleteAll(){currentEntry = ""; previousEntry = ""; operator = null; display.textContent = "0"};
 /*******************/
-
-function result(){
-
-}
