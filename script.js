@@ -41,8 +41,17 @@ document.addEventListener("keydown", e => {
 /*********/ 
 
 function handleInput(userInput){
-currentEntry += userInput;
-display.textContent = currentEntry;
+if(userInput === "CE"){deleteAll(); return;};
+if(userInput === "◄"){backspace(); return;}
+
+if("0123456789."){
+    if(userInput=== "." && currentEntry.includes(".")) return;
+    if(currentEntry.length > 9) {currentEntry = currentEntry.slice(1);}
+    currentEntry += userInput;
+    display.textContent = currentEntry;
+}
+
+
 }
 
 function performOperation(operator) {
