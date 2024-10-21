@@ -57,7 +57,12 @@ if(userInput === "="){
 }
 
 
-if(userInput === "√"){currentEntry = Math.sqrt(parseFloat(currentEntry)); display.textContent = currentEntry.toFixed(3);}
+if(userInput === "√"){
+    console.log("currentEntry:", currentEntry);
+    if(currentEntry === "√" || currentEntry === "0√" || parseFloat(currentEntry) < 0){display.textContent = "ERR";   console.log("Affichage ERR"); return;};
+    currentEntry = Math.round(Math.sqrt(parseFloat(currentEntry))*1000)/1000; 
+    display.textContent = currentEntry;
+}
 
 
 }
