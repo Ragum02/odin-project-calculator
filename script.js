@@ -51,6 +51,14 @@ if("0123456789."){
     display.textContent = currentEntry;
 }
 
+if(userInput === "="){
+    if(currentEntry === "" && operator === null) return;
+    performOperation();
+}
+
+
+if(userInput === "√"){currentEntry = Math.sqrt(parseFloat(currentEntry)); display.textContent = currentEntry.toFixed(3);}
+
 
 }
 
