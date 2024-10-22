@@ -22,9 +22,15 @@ document.addEventListener("keydown", e => {
         case "6": case "7":
         case "8": case "9":
         case ".": case "+":
-        case "-": case "*":    
+        case "-":  
             handleInput(key);
-            break;    
+            break;  
+        case "*":   
+            handleInput("×")
+            break;
+        case "/":
+            handleInput("÷")
+            break;
         case "Enter": 
             handleInput("=")
             break;
@@ -33,6 +39,7 @@ document.addEventListener("keydown", e => {
             break;
         case "Escape":
             deleteAll();
+            display.textContent = "";
             break;
     }
 
@@ -41,37 +48,82 @@ document.addEventListener("keydown", e => {
 /*********/ 
 
 function handleInput(userInput){
-if(userInput === "CE"){deleteAll(); return;};
-if(userInput === "◄"){backspace(); return;}
+if(userInput === "CE"){deleteAll(); display.textContent = ""; return;};
+if(userInput === "◄"){backspace(); return;};
 
-if("0123456789."){
-    if(userInput=== "." && currentEntry.includes(".")) return;
-    if(currentEntry.length > 9) {currentEntry = currentEntry.slice(1);}
+
+if ("0123456789.".includes(userInput)) {
+    if (userInput === "." && currentEntry.includes(".")) return;
+    if (currentEntry.length > 9) {
+        currentEntry = currentEntry.slice(1);
+    }
     currentEntry += userInput;
     display.textContent = currentEntry;
+    return;
 }
 
 if(userInput === "="){
-    if(currentEntry === "" && operator === null) return;
     performOperation();
 }
 
+if (["+", "-", "×", "­÷", "%"].includes(userInput)) {
+    if(previousEntry === "" && currentEntry === "") return;
+    operator = userInput;
+    display.textContent = operator;
+    previousEntry = currentEntry;
+    currentEntry = "";
+}
+
+
 
 if(userInput === "√"){
-    console.log("currentEntry:", currentEntry);
-    if(currentEntry === "√" || currentEntry === "0√" || parseFloat(currentEntry) < 0){display.textContent = "ERR";   console.log("Affichage ERR"); return;};
+    if(currentEntry === "" || currentEntry === "√" || currentEntry === "0√" || parseFloat(currentEntry) < 0 || isNaN(currentEntry)){display.textContent = "ERR"; return;};
     currentEntry = Math.round(Math.sqrt(parseFloat(currentEntry))*1000)/1000; 
+    currentEntry = currentEntry.toString(); 
     display.textContent = currentEntry;
 }
-
-
 }
 
-function performOperation(operator) {
+
+
+function performOperation() {
+if (!operator || !currentEntry) return;
+
+let result;
+
+const a = parseFloat(previousEntry);
+const b = parseFloat(currentEntry)
+
+switch(operator){
+    case "+":
+        result = a + b;
+        break;
+    case "-":
+        result = a - b;
+        break;
+    case "×":
+        result = a * b;
+        break;
+    case "­÷":
+        if(b === 0) {display.textContent = "ERR"; deleteAll(); return;};
+        result = a / b;
+        break;
+    case "%":
+        if(b === 0) {display.textContent = "ERR"; deleteAll();return;}
+        result = a % b;
+        break;
+}
+if(isNaN(result)){display.textContent = "ERR"; return;}
+console.log("Result:", result);
+currentEntry = Math.round(result*1000)/1000;
+currentEntry = currentEntry.toString();  
+display.textContent = currentEntry;
+operator = null;
+previousEntry = "";
 
 }
 
 /* Delete function */
-function backspace(){currentEntry = currentEntry.slice (0, -1); display.textContent = currentEntry || "0"};
-function deleteAll(){currentEntry = ""; previousEntry = ""; operator = null; display.textContent = "0"};
+function backspace(){currentEntry = currentEntry.slice(0, -1); display.textContent = currentEntry || "0"};
+function deleteAll(){currentEntry = ""; previousEntry = ""; operator = null;};
 /*******************/

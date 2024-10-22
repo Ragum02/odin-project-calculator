@@ -30,8 +30,10 @@ body{
 }
 
 button{
-    border:none;
+    border: none;
     background-color: rgb(214, 214, 214);
+    border-radius: 5px; 
+    box-shadow: 0px 3px 0px 1px rgba(0, 0, 0, 0.8); /* Ombre pour donner de la profondeur */
 }
 
 
